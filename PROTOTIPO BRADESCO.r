@@ -265,4 +265,4 @@ file.copy(filenames, dest)
 print("Todos os arquivos foram convertidos.")
 
 
-# : str_trunc(st, 24,"left") débito
+# TESTANDO A ANALISE DE TEXTO
