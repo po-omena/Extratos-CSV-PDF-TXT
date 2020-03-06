@@ -265,4 +265,4 @@ file.copy(filenames, dest)
 print("Todos os arquivos foram convertidos.")
 
 
-# TESTANDO A ANALISE DE TEXTO
+# TESTANDO A ANALISE DE TEXTO 2
