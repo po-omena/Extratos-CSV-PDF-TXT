@@ -109,6 +109,30 @@ for(z in 1:length(filenames))
                     }
             }
         tab2 <- tab2[tab2 != ""]
+        tam <- length(tab2)
+        st <- str_pad(tab2,str_length(tab2[1]),"right")
+        st <- str_trunc(st,96,"right")
+        cred <- str_trunc(st,52,"left")
+        cred <- str_trunc(cred,36,"right")
+        aux <- NULL
+        NATUREZA <- NULL
+        for (i in 1:tam)
+            {
+                if(str_detect(cred[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
+                    {
+                    aux <- c(aux,str_extract(cred[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
+                    NATUREZA <- c(NATUREZA,"C")
+                    }
+                else 
+                    {
+                        aux <- c(aux,str_extract(st[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
+                        if(str_detect(tab2[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
+                           {
+                                NATUREZA <- c(NATUREZA, "D")
+                           }
+                    }
+            }
+        rm(cred,st,aux)
         ################################## REMOÇÃO DO VALOR DA TABELA SECUNDARIA ###########################
         val <- NULL
         val <- str_extract(tab2[1:length(tab2)],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d")
@@ -195,12 +219,32 @@ for(z in 1:length(filenames))
                        in_b <- 0
                    }
             }
+        rm(in_a,in_b)
         tab2 <- (tab2%>%str_replace_all("\\d\\d/\\d\\d/\\d\\d"," ")
                      %>%str_replace_all("\\s+"," ")%>%str_replace_all("FINALDATABELA",""))
         tab2 <- tab2[tab2 != ""]
         ########################### REMOÇÃO DA DATA PARA DEFINIÇÃO DO HISTÓRICO #######################
-        conta.deb <- list(rep(3631,tam))
-        conta.cred <- list(rep(0,tam))
+        conta.deb <- NULL
+        conta.cred <- NULL
+        NATUREZA <- replace_na(NATUREZA,"X")
+        for (i in 1:length(NATUREZA))
+            {
+                if(NATUREZA[i] == "D")
+                    {
+                        conta.deb <- c(conta.deb,"2017")
+                        conta.cred <- c(conta.cred,"3631")
+                    }
+                else if(NATUREZA[i] == "C")
+                    {
+                        conta.deb <- c(conta.deb,"3631")
+                        conta.cred <- c(conta.cred,"1022")
+                    }
+                else if(NATUREZA[i] == "X")
+                    {
+                        conta.deb <- c(conta.deb,"4920")
+                        conta.cred <- c(conta.cred,"0")
+                    }
+            }
         HISTORICO <- tab2
         df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                          VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 
@@ -221,3 +265,4 @@ file.copy(filenames, dest)
 print("Todos os arquivos foram convertidos.")
 
 
+# : str_trunc(st, 24,"left") débito
