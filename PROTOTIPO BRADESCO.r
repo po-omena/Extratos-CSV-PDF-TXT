@@ -48,6 +48,10 @@ files <- list.files(folder_path, pattern="*.pdf", full.names=FALSE)
 #                   Inicio do código de processamentod e dados
 
 ano <- readline(prompt=(paste("Entre com o Ano dos extratos: ")))
+lin_fim <- 0
+pag_fim <- 0
+index <- 0
+pags <- NULL
 
 for(z in 1:length(filenames))
     {
@@ -75,20 +79,14 @@ for(z in 1:length(filenames))
                                    %>%str_replace("\\.","")
                                    %>%str_replace("\r",""))
         ################################### DEFININDO PAGINA FINAL ##################################################
-        
-        pag_fim <- str_detect(tab, "TOTAL DA MOVIMENTAÇÃO") 
-
-        for (i in 1:mx)                 #DEFININDO PAGINA FINAL
+        for (i in 1:mx)
             {
-                if(isTRUE(pag_fim[i]))
-                    pag_fim <- i
-            }
-
-        lin_fim <- (tab[[pag_fim]] %>% str_detect("TOTAL DA MOVIMENTAÇÃO")) #DEFININDO A LINHA FINAL#
-        for (i in 1:length(tab[[pag_fim]]))         #DEFININDO A LINHA FINAL#
-            {
-                if(isTRUE(lin_fim[i]))
-                    lin_fim <- i
+                for (x in 1:length(tab[[i]]))
+                    {
+                        if(str_detect(tab[[i]][x],"TOTAL DA MOVIMENTAÇÃO"))
+                            lin_fim <- x
+                            pag_fim <- i
+                    }
             }
         ####################EXCLUINDO DADOS INUTEIS DO FINAL DO DOCUMENTO#################################
         tab[[pag_fim]][lin_fim:length(tab[[pag_fim]])] <- ""
