@@ -96,8 +96,7 @@ for(z in 1:length(filenames))
                     tab[[i]] <- ""
             }
         ##################### ESTRUTURANDO A TABELA ##################################
-        tab <- unlist(tab)
-        tab2 <- tab
+        tab2 <- unlist(tab)
         ################## ESTRUTURANDO A NATUREZA DA OPERAÇÃO E REMOÇÃO DE SALDO DO DIA #############################
         for (i in (lin_in + 1):length(tab2)) 
             {
