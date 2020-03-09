@@ -261,7 +261,7 @@ dest <- (filenames[1]%>%str_replace("PDF/","PDF\\\\OLD/")
                      %>%str_split("/"))
 dest <- dest[[1]][1]
 file.copy(filenames, dest)
-#file.remove(filenames)
+file.remove(filenames)
 print("Todos os arquivos foram convertidos.")
 
 
