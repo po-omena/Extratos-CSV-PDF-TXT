@@ -48,11 +48,6 @@ files <- list.files(folder_path, pattern="*.pdf", full.names=FALSE)
 #                   Inicio do código de processamentod e dados
 
 ano <- readline(prompt=(paste("Entre com o Ano dos extratos: ")))
-lin_fim <- 0
-pag_fim <- 0
-index <- 0
-pags <- NULL
-
 for(z in 1:length(filenames))
     {
         pdf_file <- filenames[z]
