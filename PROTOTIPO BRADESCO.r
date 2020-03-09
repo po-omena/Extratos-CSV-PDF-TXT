@@ -217,6 +217,14 @@ for(z in 1:length(filenames))
                        in_b <- 0
                    }
             }
+        data <- str_split(DATA, "/")
+        tamD <- length(DATA)
+        for (i in 1:tamD)
+            {
+                    data[[i]][1] <- str_c(data[[i]][1],"/",data[[i]][2],"/",ano)
+                    DATA[i] <- data[[i]][1]
+            }
+        DATA <- DATA[DATA!=""]
         rm(in_a,in_b)
         tab2 <- (tab2%>%str_replace_all("\\d\\d/\\d\\d/\\d\\d"," ")
                      %>%str_replace_all("\\s+"," ")%>%str_replace_all("FINALDATABELA",""))
