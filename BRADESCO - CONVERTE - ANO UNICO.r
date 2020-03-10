@@ -124,7 +124,8 @@ for(z in 1:length(filenames))
                            }
                     }
             }
-        rm(cred,st,aux)
+        NATUREZA[str_detect(HISTORICO,"TARIFA")] <- "D"
+        #rm(cred,st,aux)
         ################################## REMOÇÃO DO VALOR DA TABELA SECUNDARIA ###########################
         val <- NULL
         val <- str_extract(tab2[1:length(tab2)],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d")
@@ -263,6 +264,5 @@ dest <- dest[[1]][1]
 file.copy(filenames, dest)
 file.remove(filenames)
 print("Todos os arquivos foram convertidos.")
-
 
 # TESTANDO A ANALISE DE TEXTO 2
