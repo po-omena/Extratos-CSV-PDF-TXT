@@ -247,6 +247,13 @@ for(z in 1:length(filenames))
                     }
             }
         HISTORICO <- tab2
+        
+        conta.deb[str_detect(HISTORICO,"TARIFA")] <- 3128
+        conta.deb[str_detect(HISTORICO,"APLICINVEST")] <- 3631
+        conta.cred[str_detect(HISTORICO,"APLICINVEST")] <- 3515
+        conta.deb[str_detect(HISTORICO,"RESGATE INVEST")] <- 3515
+        conta.cred[str_detect(HISTORICO,"RESGATE INVEST")] <- 3631
+
         df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                          VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 
         fileName <- (filenames[z]%>%str_replace(".pdf",".csv")
