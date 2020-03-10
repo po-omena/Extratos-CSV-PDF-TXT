@@ -19,6 +19,7 @@ library("tidyverse")
 library("pdftools")
 library("stringr")
 library("magrittr")
+library("utils")
                                     #Criação das pastas necessarias
 desktop <- file.path(Sys.getenv("USERPROFILE"),"Desktop")
 desktop <- str_replace(desktop,"/","\\\\")
