@@ -78,7 +78,7 @@ for(z in 1:length(filenames))
             {
                 for (x in 1:length(tab[[i]]))
                     {
-                        if(str_detect(tab[[i]][x],"TOTAL DA MOVIMENTAÇÃO"))
+                        if(str_detect(tab[[i]][x],"TOTAL DA MOVIM"))
                             lin_fim <- x
                             pag_fim <- i
                     }
@@ -124,7 +124,6 @@ for(z in 1:length(filenames))
                            }
                     }
             }
-        NATUREZA[str_detect(HISTORICO,"TARIFA")] <- "D"
         #rm(cred,st,aux)
         ################################## REMOÇÃO DO VALOR DA TABELA SECUNDARIA ###########################
         val <- NULL
@@ -246,14 +245,16 @@ for(z in 1:length(filenames))
                         conta.cred <- c(conta.cred,"0")
                     }
             }
+        #################################### Define o HISTORICO #################
         HISTORICO <- tab2
-        
+        ######################## Atualizações adicionais #############################
+        NATUREZA[str_detect(HISTORICO,"TARIFA")] <- "D"
         conta.deb[str_detect(HISTORICO,"TARIFA")] <- 3128
         conta.deb[str_detect(HISTORICO,"APLICINVEST")] <- 3631
         conta.cred[str_detect(HISTORICO,"APLICINVEST")] <- 3515
         conta.deb[str_detect(HISTORICO,"RESGATE INVEST")] <- 3515
         conta.cred[str_detect(HISTORICO,"RESGATE INVEST")] <- 3631
-
+        ####################################################################################################
         df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                          VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 
         fileName <- (filenames[z]%>%str_replace(".pdf",".csv")
