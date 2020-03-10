@@ -1,4 +1,4 @@
-#Esse código extrai uma tabela de um arquivo PDF de extrato de banco SICOOB.
+#Esse código extrai uma tabela de um arquivo PDF de extrato de banco CAIXA.
 #Utilizando tecnicas de data wrangling no R para estruturar e posteriormente
 #exportar os dados para .csv e .txt
 
@@ -26,9 +26,9 @@ setwd(desktop)
 dir.create("PDF-CSV")
 wd <- desktop %>% str_c("\\PDF-CSV")
 setwd(wd)
-dir.create("SICOOB")
+dir.create("CAIXA")
 setwd(wd)
-wd <- desktop %>% str_c("\\PDF-CSV\\SICOOB")
+wd <- desktop %>% str_c("\\PDF-CSV\\CAIXA")
 setwd(wd)
 dir.create("PDF")
 dir.create("CSV")
@@ -37,7 +37,7 @@ old <- str_c(wd,"\\PDF")
 setwd(old)
 dir.create("OLD")
 setwd(wd)
-old <- str_c(wd,"\\SICOOB\\PDF\\OLD")
+old <- str_c(wd,"\\CAIXA\\PDF\\OLD")
 #                   Definição do caminho para os arquivos
 folder_path <- wd
 folder_path <- (folder_path%>%str_replace_all("/","\\\\")
