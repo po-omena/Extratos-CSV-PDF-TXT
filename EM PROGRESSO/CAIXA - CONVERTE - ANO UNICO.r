@@ -111,7 +111,7 @@ for(z in 1:length(filenames))
         ################## ESTRUTURANDO A NATUREZA DA OPERAÇÃO E REMOÇÃO DE SALDO DO DIA #############################
         for (i in 1:length(tab2)) 
             {
-                if(str_detect(tab2[i],"SALDO ANTERIOR" ) | str_detect(tab2[i],"SALDO" ))
+                if(str_detect(tab2[i],"SALDO ANTERIOR" ) | str_detect(tab2[i],"Nr Doc." ))
                     {
                         tab2[i] <- ""
                     }
@@ -136,11 +136,11 @@ for(z in 1:length(filenames))
                 if(NATUREZA[i] == "D")
                     {
                         conta.deb <- c(conta.deb,"2017")
-                        conta.cred <- c(conta.cred,"3520")
+                        conta.cred <- c(conta.cred,"1016")
                     }
                 else if(NATUREZA[i] == "C")
                     {
-                        conta.deb <- c(conta.deb,"3520")
+                        conta.deb <- c(conta.deb,"1016")
                         conta.cred <- c(conta.cred,"1022")
                     }
                 else if(NATUREZA[i] == "X")
@@ -155,52 +155,15 @@ for(z in 1:length(filenames))
         date <- NULL
         for (i in 1:length(tab2))
             {
-                date  <- c(date,str_extract(tab2[i],"\\d\\d/\\d\\d"))
+                date  <- c(date,str_extract(tab2[i],"\\d\\d/\\d\\d/\\d\\d\\d\\d"))
             }
         DATA <- date[!is.na(date)]
         tamD <- length(DATA)
-        DATA <- str_c(DATA[1:tamD],"/",ano)
         rm(date)
-        ######################## CONCATENAÇÃO DA LISTA SENDO A DATA CONSIDERADA O INDICE #####################
-        in_a <- 0
-        in_b <- 0
-        tam <- length(tab2)
-        tab2[tam+1] <- "FINALDATABELA"
-        tam <- length(tab2)
-        for (i in 1:tam)
-            {
-                if(str_detect(tab2[i],"\\d\\d/\\d\\d") | str_detect(tab2[i],"FINALDATABELA"))
-                    {
-                        if(in_a == 0)
-                            in_a <- i
-                        else if(in_b == 0)
-                            in_b <- i - 1
-                    }
-                if(in_a == in_b & in_b != 0)
-                    {
-                        in_a <- i
-                        in_b <- 0
-                        next
-                    }
-               if(in_a > 0 & in_b > 0)
-                   {
-                       for (x in (in_a+1):in_b)
-                           {
-                               tab2[in_a] <- str_c(tab2[in_a],tab2[x])
-                               tab2[x] <- ""
-                           }
-                       in_a <- i
-                       in_b <- 0
-                   }
-            }
-        tab2[tam] <- ""
-        tab2 <- tab2[tab2!=""]
-        tam <- length(tab2)
-
         ########################### REMOÇÃO DA DATA PARA DEFINIÇÃO DO HISTÓRICO #######################
-        tab2 <- str_replace_all(tab2,"\\d\\d/\\d\\d ","")
-        tab2 <- str_replace_all(tab2,"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d(D| D|C| C)?","")
+        tab2 <- str_replace_all(tab2,"\\d\\d/\\d\\d/\\d\\d\\d\\d","")
         HISTORICO <- tab2
+        VALOR <- str_replace_all(VALOR, "\\s+","")
         df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                          VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 
         fileName <- (filenames[z]%>%str_replace(".pdf",".csv")
