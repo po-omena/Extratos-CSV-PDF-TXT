@@ -52,7 +52,6 @@ files <- list.files(folder_path, pattern="*.pdf", full.names=FALSE)
 pdf_file <- filenames[1]
 #                   Inicio do código de processamento de dados
 
-ano <- readline(prompt=(paste("Entre com o Ano dos extratos: ")))
 por <- tesseract("por")
 for(z in 1:length(filenames))
     {
