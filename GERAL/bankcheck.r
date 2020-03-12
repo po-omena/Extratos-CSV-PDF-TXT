@@ -53,7 +53,7 @@ files <- length(filenames)
                     }
             else
                 {
-                    print("Não foi possivel identificar o Banco.")
+                    print("cat("Banco não identificado.\nDigite manualmente o Nº do banco:\n1 - SICOOB\n2 - CAIXA\n3 - BRADESCO"))
                     filenames[z] <- ""
                     next
                 }
