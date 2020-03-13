@@ -62,7 +62,7 @@ for(z in 1:length(filenames))
             }
 
         pag_in <- 1          #DEFININDO PAGINA INICIAL
-        lin_in <- str_detect(tab[[pag_in]], "DATA") #DEFININDO LINHA INICIAL
+        lin_in <- str_detect(tab[[pag_in]], "Lançamento") #DEFININDO LINHA INICIAL
         for (i in 1:length(tab[[pag_in]]))             #DEFININDO LINHA INICIAL
             {
                 if(isTRUE(lin_in[i]))
@@ -75,15 +75,11 @@ for(z in 1:length(filenames))
                                    %>%str_replace("\\.","")
                                    %>%str_replace("\r",""))
         ################################### DEFININDO PAGINA FINAL ##################################################
-        for (i in 1:mx)
-            {
-                for (x in 1:length(tab[[i]]))
-                    {
-                        if(str_detect(tab[[i]][x],"TOTAL DA MOVIM"))
-                            lin_fim <- x
-                            pag_fim <- i
-                    }
-            }
+        pgf <- str_detect(tab[1:mx],"Últimos Lançamentos")
+        pag_fim <- match(TRUE,pgf)
+        rm(pgf)
+        lnf <- str_detect(tab[[pag_fim]], "Últimos Lançamentos")
+        lin_fim <- match(TRUE,lnf)
         ####################EXCLUINDO DADOS INUTEIS DO FINAL DO DOCUMENTO#################################
         tab[[pag_fim]][lin_fim:length(tab[[pag_fim]])] <- ""
         if(mx > pag_fim)
@@ -104,44 +100,41 @@ for(z in 1:length(filenames))
         tab2 <- tab2[tab2 != ""]
         tam <- length(tab2)
         st <- str_pad(tab2,str_length(tab2[1]),"right")
-        st <- str_trunc(st,96,"right")
-        cred <- str_trunc(st,52,"left")
-        cred <- str_trunc(cred,36,"right")
         aux <- NULL
         NATUREZA <- NULL
         for (i in 1:tam)
             {
-                if(str_detect(cred[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
-                    {
-                    aux <- c(aux,str_extract(cred[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
-                    NATUREZA <- c(NATUREZA,"C")
-                    }
-                else 
-                    {
-                        aux <- c(aux,str_extract(st[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
-                        if(str_detect(tab2[i],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
-                           {
-                                NATUREZA <- c(NATUREZA, "D")
-                           }
-                    }
+                if(str_detect(tab2[i],"\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
+                     aux <- c(aux,str_extract(tab2[i],"\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))   
             }
         #rm(cred,st,aux)
         ################################## REMOÇÃO DO VALOR DA TABELA SECUNDARIA ###########################
         val <- NULL
-        val <- str_extract(tab2[1:length(tab2)],"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d")
+        val <- aux
         VALOR <- val[!is.na(val)]
         VALOR <- str_replace_all(VALOR,"\\.","")
+        for (i in 1:length(VALOR))
+            {
+                if(str_detect(VALOR[i],"\\-"))
+                    NATUREZA <- c(NATUREZA,"D")
+                else NATUREZA <- c(NATUREZA,"C")
+            }
         rm(val)
-        tab2 <- tab2%>%str_replace_all("\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d","")
+        tab2 <- tab2%>%str_replace_all("\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d","")
         ######################### Separando Natureza da operação do valor e limpeza ####################################
         tam <- length(tab2)
         for (i in 1:tam)
             {
-                if(str_detect(tab2[i],"Valor Disponivel"))
+                if(str_detect(tab2[i],"Total") |
+                   str_detect(tab2[i],"Os dados acima"))
                     tab2[i] <- ""
             }
+        tab2[1] <- ""
+        tab2 <- str_replace_all(tab2, "\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d","")
+        tab2 <- str_replace_all(tab2, "\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d","")
+
         tab2 <- tab2[tab2 != ""]
-        ######################## CONCATENAÇÃO DA LISTA SENDO O DOCTO CONSIDERADO O INDICE #####################
+        ######################## CONCATENAÇÃO DA LISTA SENDO A DATA CONSIDERADO O INDICE #####################
         in_a <- 0
         in_b <- 0
         tam <- length(tab2)
@@ -251,10 +244,10 @@ for(z in 1:length(filenames))
         ######################## Atualizações adicionais #############################
         NATUREZA[str_detect(HISTORICO,"TARIFA")] <- "D"
         conta.deb[str_detect(HISTORICO,"TARIFA")] <- 3128
-        conta.deb[str_detect(HISTORICO,"APLICINVEST")] <- 3631
-        conta.cred[str_detect(HISTORICO,"APLICINVEST")] <- 3515
-        conta.deb[str_detect(HISTORICO,"RESGATE INVEST")] <- 3515
-        conta.cred[str_detect(HISTORICO,"RESGATE INVEST")] <- 3631
+        conta.cred[str_detect(HISTORICO,"APLICINVEST")] <- 3631
+        conta.deb[str_detect(HISTORICO,"APLICINVEST")] <- 3515
+        conta.cred[str_detect(HISTORICO,"RESGATE INVEST")] <- 3515
+        conta.deb[str_detect(HISTORICO,"RESGATE INVEST")] <- 3631
         ####################################################################################################
         df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                          VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 

@@ -7,7 +7,6 @@
 #date: 04/03/2020
 
 print("Parsing the Data...")
-ano <- readline(prompt=(paste("Entre com o Ano dos extratos: ")))
 tab <- str_split(text, "\n")
 mx <- length(tab)
 setwd(folder_path)
@@ -18,11 +17,11 @@ for (i in 1:mx) ################ LIMPANDO A TABELA
 pag_in <- str_detect(tab[1],"Nr. Doc.")          #DEFININDO PAGINA INICIAL
 if(isTRUE(pag_in[1]))
     pag_in <- 1
-lin_in <- str_detect(tab[[pag_in]], "Nr. Doc.") #DEFININDO LINHA INICIAL
+    
 for (i in 1:length(tab[[pag_in]]))             #DEFININDO LINHA INICIAL
     {
-        if(isTRUE(lin_in[i]))
-          lin_in <- i
+        if(str_detect(tab[[pag_in]][i], "Nr. Doc."))
+            lin_in <- i
     }
                #LAÇO PARA REMOVER CABEÇALHO DE DADOS INÚTEIS DO CABEÇALHO
 tab[[pag_in]][1:(lin_in - 1)] <- ""
@@ -121,3 +120,6 @@ fileName2 <- (filenames[z]%>%str_replace(".pdf",".txt")
 write.csv(df, file=fileName, row.names = FALSE)
 write.table(df, fileName2, append = FALSE, sep = " ", dec = ",",
     row.names = FALSE, col.names = TRUE)
+
+cat("Current file: ", filenamespure[z],"\n")
+cat("Status: Finished.\n\n")

@@ -35,6 +35,7 @@ folder_path <- (folder_path%>%str_replace_all("/","\\\\")
                        %>%str_c("\\PDF"))
 print("Loading Files...")
 filenames <- list.files(folder_path, pattern="*.pdf", full.names=TRUE)
+filenamespure <- list.files(folder_path, pattern="*.pdf", full.names=FALSE)
 files <- length(filenames)
     for (z in 1:files)
         {
@@ -51,19 +52,31 @@ files <- length(filenames)
                         setwd(origin)
                         source("bin2.R")
                     }
+            else if(str_detect(teste_text[[1]], "DEMONSTRATIVO MENSAL - CONTA CORRENTE\r\nDATA"))
+                {
+                    setwd(origin)
+                    source("bin3.r")
+                }
+            else if(str_detect(teste_text[[1]],"Agência | Conta\r\n"))
+                {
+                    setwd(origin)
+                    source("bin4.r")
+                }
             else
                 {
-                    print("cat("Banco não identificado.\nDigite manualmente o Nº do banco:\n1 - SICOOB\n2 - CAIXA\n3 - BRADESCO"))
+                    cat("Banco não identificado.\nDigite manualmente o Nº do banco:\n1 - SICOOB\n2 - CAIXA\n3 - BRADESCO")
                     filenames[z] <- ""
                     next
+                    # print(text)
                 }
         }
 
 print("Finishing...")
+filesnames <- NULL
 filesnames <- filesnames[filesnames != ""]
 dest <- (filenames[z]%>%str_replace("PDF/","PDF\\\\OLD/")
                      %>%str_split("/"))
 dest <- dest[[1]][1]
 file.copy(filenames, dest)
 file.remove(filenames)
-print("Todos os arquivos foram convertidos.")
+cat("Todos os arquivos foram convertidos.\n\n\n")
