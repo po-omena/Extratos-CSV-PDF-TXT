@@ -3,7 +3,7 @@
 #exportar os dados para .csv e .txt
 
 #@author: Paulo Otavio Omena dos Santos
-## Bradesco 2
+## Bradesco Limpo
 #date: 04/03/2020
 
 #                   Inicio do código de processamentod e dados

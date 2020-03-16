@@ -62,6 +62,11 @@ files <- length(filenames)
                     setwd(origin)
                     source("bin4.r")
                 }
+            else if(str_detect(teste_text[[1]],"Dt. balancete Dt. movimento            Lote Hist"))
+                {
+                    setwd(origin)
+                    source("bin5.r")
+                }
             else
                 {
                     cat("Banco não identificado.\nDigite manualmente o Nº do banco:\n1 - SICOOB\n2 - CAIXA\n3 - BRADESCO")
