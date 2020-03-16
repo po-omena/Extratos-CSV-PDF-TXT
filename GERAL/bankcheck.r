@@ -62,7 +62,7 @@ files <- length(filenames)
                     setwd(origin)
                     source("bin4.r")
                 }
-            else if(str_detect(teste_text[[1]],"Dt. balancete Dt. movimento            Lote Hist"))
+            else if(str_detect(teste_text[[1]],"Dt. balancete Dt. movimento"))
                 {
                     setwd(origin)
                     source("bin5.r")

@@ -18,11 +18,11 @@ pag_in <- 1          #DEFININDO PAGINA INICIAL
 
 for (i in 1:length(tab[[pag_in]]))             #DEFININDO LINHA INICIAL
     {
-        if(str_detect(tab[[pag_in]][i], "     origem"))
+        if(str_detect(tab[[pag_in]][i], "Dt balancete Dt. movimento"))
             lin_in <- i
     }
                #LAÇO PARA REMOVER CABEÇALHO DE DADOS INÚTEIS DO CABEÇALHO
-tab[[pag_in]][1:(lin_in)] <- ""
+tab[[pag_in]][1:(lin_in + 1)] <- ""
 ################################### DEFININDO PAGINA FINAL ##################################################
 pag_fim <- str_detect(tab, "---------------") 
 for (i in 1:mx)                 #DEFININDO PAGINA FINAL
