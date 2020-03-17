@@ -80,6 +80,7 @@ for (i in 1:length(tab2))
     }
     tab2[1] <- ""
 tab2 <- tab2[tab2 != ""]
+tab2 <- tab2[!str_detect(tab2,"\\d,\\d\\d \\*")]
 ################################## REMOÇÃO DO VALOR DA TABELA SECUNDARIA ###########################
 val <- NULL
 val <- str_extract(tab2[1:length(tab2)]," \\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d( D| C)?")
