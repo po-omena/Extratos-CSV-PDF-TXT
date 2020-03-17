@@ -3,7 +3,7 @@
 #exportar os dados para .csv e .txt
 
 #@author: Paulo Otavio Omena dos Santos
-#CAIXIA
+#Banco do Brasil
 #date: 04/03/2020
 
 print("Parsing the Data...")
@@ -24,13 +24,17 @@ for (i in 1:length(tab[[pag_in]]))             #DEFININDO LINHA INICIAL
                #LAÇO PARA REMOVER CABEÇALHO DE DADOS INÚTEIS DO CABEÇALHO
 tab[[pag_in]][1:(lin_in + 1)] <- ""
 ################################### DEFININDO PAGINA FINAL ##################################################
-pag_fim <- str_detect(tab, "---------------") 
+pag_fim <- (str_detect(tab, "---------------") |
+            str_detect(tab, "Limite Ouro Empresarial"))
 for (i in 1:mx)                 #DEFININDO PAGINA FINAL
     {
         if(isTRUE(pag_fim[i]))
             pag_fim <- i
     }
-lin_fim <- (tab[[pag_fim]] %>% str_detect("---------------")) #DEFININDO A LINHA FINAL#
+                             #DEFININDO A LINHA FINAL#
+lin_fim <- (str_detect(tab[[pag_fim]],"---------------") | 
+           (str_detect(tab[[pag_fim]],"\\d\\d/\\d\\d/\\d\\d\\d\\d") & 
+            str_detect(tab[[pag_fim]],"S A L D O"))) 
 for (i in 1:length(tab[[pag_fim]]))         #DEFININDO A LINHA FINAL#
     {
         if(isTRUE(lin_fim[i]))
@@ -64,13 +68,6 @@ for (i in 1:length(tab2))
             }
     }
 
-        #  Código extra
-# for (i in 235:237)
-    # {
-        # teste <- c(teste,str_extract_all(tab2[i],"\\d\\d/\\d\\d/\\d\\d\\d\\d"))
-    # } 
-    #
-# tab2 <- str_replace(tab2[353],"\\d\\d\\d\\d","")
 
 tab2 <- str_replace_all(tab2,"\\s+"," ")
 ################## ESTRUTURANDO A NATUREZA DA OPERAÇÃO E REMOÇÃO DE SALDO DO DIA #############################
