@@ -66,6 +66,12 @@ files <- length(filenames)
                 {
                     setwd(origin)
                     source("bin5.r")
+                }            
+            else if(str_detect(teste_text[[1]],"8.430-1 - TOPP INOX") | 
+                    str_detect(teste_text[[1]],"8.652-5 - HWO"))
+                {
+                    setwd(origin)
+                    source("bin7.r")
                 }
             else
                 {
@@ -85,3 +91,4 @@ dest <- dest[[1]][1]
 file.copy(filenames, dest)
 file.remove(filenames)
 cat("Todos os arquivos foram convertidos.\n\n\n")
+
