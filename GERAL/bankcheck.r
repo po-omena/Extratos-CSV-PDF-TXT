@@ -95,3 +95,7 @@ file.copy(filenames, dest)
 file.remove(filenames)
 cat("Todos os arquivos foram convertidos.\n\n\n")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
