@@ -185,6 +185,12 @@ tam <- length(tab2)
 ########################### REMOÇÃO DA DATA PARA DEFINIÇÃO DO HISTÓRICO #######################
 tab2 <- str_replace_all(tab2,"\\d\\d/\\d\\d ","")
 tab2 <- str_replace_all(tab2,"\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d(D| D|C| C)?","")
+if(length(tab2) > length(DATA))
+    {
+        tab[2] <- str_c(tab2[2],tab2[1])
+        tab[1]<- ""
+        tab2 <- tab2[tab2!=""]
+    }
 HISTORICO <- tab2
 df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                  VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 
