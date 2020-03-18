@@ -192,6 +192,7 @@ if(length(tab2) > length(DATA))
         tab2 <- tab2[tab2!=""]
     }
 HISTORICO <- tab2
+HISTORICO <- str_replace_all(HISTORICO,"\\d\\d/\\d\\d/\\d\\d\\d?\\d?","")
 df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                  VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 
 fileName <- (filenames[z]%>%str_replace(".pdf",".csv")
