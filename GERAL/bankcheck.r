@@ -44,8 +44,17 @@ files <- length(filenames)
             teste_text <- unlist(text)
             if(str_detect(teste_text[[1]],"SICOOB"))
                 {
-                    setwd(origin)
-                    source("bin1.R")
+					if(str_detect(teste_text[[1]],"8.430-1 - TOPP INOX") | 
+					   str_detect(teste_text[[1]],"8.652-5 - HWO"))
+						{
+							setwd(origin)
+							source("bin7.r")
+						}
+					else
+						{
+							setwd(origin)
+							source("bin1.R")					
+						}
                 }
             else if(str_detect(teste_text[[1]],"C.AIXA") | str_detect(teste_text[[1]],"AIXA\r\n"))
                     {
@@ -67,12 +76,6 @@ files <- length(filenames)
                     setwd(origin)
                     source("bin5.r")
                 }            
-            else if(str_detect(teste_text[[1]],"8.430-1 - TOPP INOX") | 
-                    str_detect(teste_text[[1]],"8.652-5 - HWO"))
-                {
-                    setwd(origin)
-                    source("bin7.r")
-                }
             else
                 {
                     cat("Banco não identificado.\nDigite manualmente o Nº do banco:\n1 - SICOOB\n2 - CAIXA\n3 - BRADESCO")
@@ -90,5 +93,8 @@ dest <- (filenames[z]%>%str_replace("PDF/","PDF\\\\OLD/")
 dest <- dest[[1]][1]
 file.copy(filenames, dest)
 file.remove(filenames)
+cat("Todos os arquivos foram convertidos.\n\n\n")
+
+enames)
 cat("Todos os arquivos foram convertidos.\n\n\n")
 
