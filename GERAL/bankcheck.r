@@ -72,10 +72,16 @@ files <- length(filenames)
                     source("bin4.r")
                 }
             else if(str_detect(teste_text[[1]],"Dt. balancete Dt. movimento"))
-                {
-                    setwd(origin)
-                    source("bin5.r")
-                }            
+					if(str_detect(teste_text[[1]],"85425-5 TOPP INOX"))
+						{
+							setwd(origin)
+							source("bin8.r")
+						}
+					else
+						{
+							setwd(origin)
+							source("bin5.r")					
+						}       
             else
                 {
                     cat("Banco não identificado.\nDigite manualmente o Nº do banco:\n1 - SICOOB\n2 - CAIXA\n3 - BRADESCO")
