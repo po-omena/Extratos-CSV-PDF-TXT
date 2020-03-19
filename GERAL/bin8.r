@@ -167,6 +167,7 @@ tam <- length(tab2)
 tab2 <- str_replace_all(tab2,"\\d\\d\\d\\d \\d\\d\\d\\d\\d \\d\\d\\d","")
 HISTORICO <- tab2
 HISTORICO <- HISTORICO %>% str_replace_all("\\d\\d/\\d\\d/\\d\\d\\d\\d","")
+HISTORICO <- str_trunc(HISTORICO,100, "right")
 VALOR <- str_replace_all(VALOR, "\\s+","")
 df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                  VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 

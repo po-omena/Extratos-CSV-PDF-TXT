@@ -205,6 +205,8 @@ for (i in 1:length(NATUREZA))
     }
 #################################### Define o HISTORICO #################
 HISTORICO <- tab2
+HISTORICO <- str_replace_all(HISTORICO,"\\d\\d/\\d\\d/\\d\\d\\d?\\d?","")
+HISTORICO <- str_trunc(HISTORICO,100, "right")
 ######################## Atualizações adicionais #############################
 NATUREZA[str_detect(HISTORICO,"TARIFA")] <- "D"
 conta.deb[str_detect(HISTORICO,"TARIFA")] <- 3128

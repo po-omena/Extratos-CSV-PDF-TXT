@@ -110,6 +110,8 @@ rm(date)
 ########################### REMOÇÃO DA DATA PARA DEFINIÇÃO DO HISTÓRICO #######################
 tab2 <- str_replace_all(tab2,"\\d\\d/\\d\\d/\\d\\d\\d\\d","")
 HISTORICO <- tab2
+HISTORICO <- str_replace_all(HISTORICO,"\\d\\d/\\d\\d/\\d\\d\\d?\\d?","")
+HISTORICO <- str_trunc(HISTORICO,100, "right")
 VALOR <- str_replace_all(VALOR, "\\s+","")
 df <- data.frame(CONTA_DEB=conta.deb,CONTA_CRED=conta.cred,
                  VALOR=VALOR,DATA=DATA,HISTORICO=HISTORICO) 
