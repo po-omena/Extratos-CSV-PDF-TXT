@@ -99,13 +99,13 @@ for (i in 1:length(NATUREZA))
     {
         if(NATUREZA[i] == "D")
             {
-                conta.deb <- c(conta.deb,"2017")
-                conta.cred <- c(conta.cred,"1009")
+                conta.deb <- c(conta.deb,"21111")
+                conta.cred <- c(conta.cred,"11127")
             }
         else if(NATUREZA[i] == "C")
             {
-                conta.deb <- c(conta.deb,"1009")
-                conta.cred <- c(conta.cred,"1022")
+                conta.deb <- c(conta.deb,"11127")
+                conta.cred <- c(conta.cred,"11201")
             }
         else if(NATUREZA[i] == "X")
             {
