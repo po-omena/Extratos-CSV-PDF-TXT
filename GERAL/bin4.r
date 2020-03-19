@@ -56,25 +56,6 @@ tam <- length(tab2)
 st <- str_pad(tab2,str_length(tab2[1]),"right")
 aux <- NULL
 NATUREZA <- NULL
-for (i in 1:tam)
-    {
-        if(str_detect(tab2[i],"\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
-             aux <- c(aux,str_extract(tab2[i],"\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))   
-    }
-#rm(cred,st,aux)
-################################## REMOÇÃO DO VALOR DA TABELA SECUNDARIA ###########################
-val <- NULL
-val <- aux
-VALOR <- val[!is.na(val)]
-VALOR <- str_replace_all(VALOR,"\\.","")
-for (i in 1:length(VALOR))
-    {
-        if(str_detect(VALOR[i],"\\-"))
-            NATUREZA <- c(NATUREZA,"D")
-        else NATUREZA <- c(NATUREZA,"C")
-    }
-rm(val)
-tab2 <- tab2%>%str_replace_all("\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d","")
 ######################### Separando Natureza da operação do valor e limpeza ####################################
 tam <- length(tab2)
 for (i in 1:tam)
@@ -95,31 +76,60 @@ for (i in 1:tam)
             {
                 str_detect(tab2[i], "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d")
                 tab2[i] <- str_c(tab2[i],tab2[i-1])
+                tab2[i] <- str_c(tab2[i],tab2[i+1])
                 tab2[i-1] <- ""
+                tab2[i+1] <- ""
             }
     }
-tab2 <- tab2[tab2 != ""]
-tab2 <- tab2[tab2 != " "]
-tam <- length(tab2)
-teste <- tab2
 tab2 <- str_replace_all(tab2[1:length(tab2)], "\\s+"," ")
 tab2 <- tab2[tab2 != ""]
 tab2 <- tab2[tab2 != " "]
+tam <- length(tab2)
+
 for (i in 1:length(tab2))
     {
-        if(str_detect(tab2[i],"\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d\\d") & 
-           str_length(tab2[i]) < 12)
+        if(str_detect(tab2[i],"\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d") & 
+           str_length(tab2[i]) < 30)
             {
-                tab2[i-1] <- str_c(tab2[i-1],tab2[i])
-                tab2[i] <- ""
+                tab2[i] <- str_c(tab2[i],tab2[i-1])
+                tab2[i] <- str_c(tab2[i],tab2[i+1])
+                tab2[i-1] <- ""
+                tab2[i+1] <- ""
             }
     }
+#  for (i in 1:length(tab2))
+#     {
+#         if(str_detect(tab2[i],"\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d\\d") & 
+#            str_length(tab2[i]) < 12)
+#             {
+#                 tab2[i-1] <- str_c(tab2[i-1],tab2[i])
+#                 tab2[i] <- ""
+#             }
+#     }
 tab2 <- tab2[tab2 != ""]
 tab2 <- tab2[tab2 != " "]
 tab2 <- tab2[str_detect(tab2,"\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d\\d")]
 tam <- length(tab2)
 tab2 <- (tab2%>%str_replace_all("\\s+"," ")%>%str_replace_all(" DOC","-DOC"))
-# Concatenação
+# # # # # # # # # # # # # # # # # # # # # # Concatenação
+for (i in 1:tam)
+    {
+        if(str_detect(tab2[i],"\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))
+             aux <- c(aux,str_extract(tab2[i],"\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d?,\\d\\d"))   
+    }
+################################## REMOÇÃO DO VALOR DA TABELA SECUNDARIA ###########################
+val <- NULL
+val <- aux
+VALOR <- val[!is.na(val)]
+VALOR <- str_replace_all(VALOR,"\\.","")
+for (i in 1:length(VALOR))
+    {
+        if(str_detect(VALOR[i],"\\-"))
+            NATUREZA <- c(NATUREZA,"D")
+        else NATUREZA <- c(NATUREZA,"C")
+    }
+rm(val)
+tab2 <- tab2%>%str_replace_all("\\-?\\d?\\d?\\d?\\d?\\.?\\d?\\d?\\d,\\d\\d","")
 ################################ ADICIONANDO DATA PARA TODOS OS VALORES #############################
 DATA <- NULL
 in_a <- 0
@@ -136,12 +146,9 @@ for (i in 1:tam)
                 else if(in_b == 0)
                     in_b <- i - 1
             }
-        if(in_a == in_b & in_b != 0)
-            {
-                in_a <- i
-                in_b <- 0
-                next
-            }
+        if(tab2[in_a] == "FINALDATABELA")
+                break
+            
        if(in_a > 0 & in_b > 0)
            {
                data <- str_extract(tab2[in_a],"\\d\\d/\\d\\d/\\d\\d\\d\\d")

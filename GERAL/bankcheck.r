@@ -66,7 +66,7 @@ files <- length(filenames)
                     setwd(origin)
                     source("bin3.r")
                 }
-            else if(str_detect(teste_text[[1]],"Agência | Conta\r\n"))
+            else if(str_detect(teste_text[[1]],"Agência | Conta"))
                 {
                     setwd(origin)
                     source("bin4.r")
