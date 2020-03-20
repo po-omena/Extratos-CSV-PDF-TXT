@@ -29,16 +29,19 @@ tab[[pag_in]][lin_in] <- ( tab[[pag_in]][lin_in]                #LIMPANDO A LINH
                            %>%str_replace("\\.","")
                            %>%str_replace("\r",""))
 ################################### DEFININDO PAGINA FINAL ##################################################
-pag_fim <- str_detect(tab, "mentos do Dia") 
+pag_fim <- str_detect(tab, "mentos do Dia") | str_detect(tab, "SAC CAIXA")
 for (i in 1:mx)                 #DEFININDO PAGINA FINAL
     {
         if(isTRUE(pag_fim[i]))
             pag_fim <- i
     }
 lin_fim <- (tab[[pag_fim]] %>% str_detect("mentos do Dia")) #DEFININDO A LINHA FINAL#
+lin_fim2 <- (tab[[pag_fim]] %>% str_detect("SAC CAIXA")) #DEFININDO A LINHA FINAL#
 for (i in 1:length(tab[[pag_fim]]))         #DEFININDO A LINHA FINAL#
     {
         if(isTRUE(lin_fim[i]))
+            lin_fim <- i
+        if(isTRUE(lin_fim2[i]))
             lin_fim <- i
     }
 ####################EXCLUINDO DADOS INUTEIS DO FINAL DO DOCUMENTO#################################
@@ -51,6 +54,7 @@ if(mx > pag_fim)
 ##################### ESTRUTURANDO OS VALORES ##################################
 tab2 <- unlist(tab)
 tab2 <- tab2[!str_detect(tab2,"https")]
+tab2 <- tab2[!str_detect(tab2,"c.AIXA")]
 tab2 <- tab2[!str_detect(tab2,"In:t-ernet")]
 x <- 0
 tab2 <- str_trunc(tab2, 112, "right")
