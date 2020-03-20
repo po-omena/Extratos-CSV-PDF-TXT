@@ -65,6 +65,11 @@ files <- length(filenames)
                 {
                     setwd(origin)
                     source("bin3.r")
+                }      
+           else if(str_detect(teste_text[[1]], "santander"))
+                {
+                    setwd(origin)
+                    source("bin7.r")
                 }
             else if(str_detect(teste_text[[1]],"Agência | Conta"))
                 {
