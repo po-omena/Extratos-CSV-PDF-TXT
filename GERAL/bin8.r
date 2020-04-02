@@ -6,7 +6,7 @@
 #Banco do Brasil 85425-5 TOPP INOX 
 #date: 04/03/2020
 
-print("Parsing the Data...")
+print("Parsing the Data via Bank 8...")
 tab <- str_split(text, "\n")
 mx <- length(tab)
 setwd(folder_path)
@@ -15,10 +15,11 @@ for (i in 1:mx) ################ LIMPANDO A TABELA
         tab[[i]] <- (tab[[i]]%>%str_replace("\\.","")%>%str_replace("\r",""))
     }
 pag_in <- 1          #DEFININDO PAGINA INICIAL
-
 for (i in 1:length(tab[[pag_in]]))             #DEFININDO LINHA INICIAL
     {
-        if(str_detect(tab[[pag_in]][i], "Dt balancete Dt. movimento"))
+        if(str_detect(tab[[pag_in]][i], "Dt balancete Dt. movimento") |
+           str_detect(tab[[pag_in]][i], "Dt. balancete Dt. movimento")|
+           str_detect(tab[[pag_in]][i], "Dt balancete Dt movimento"))
             lin_in <- i
     }
                #LAÇO PARA REMOVER CABEÇALHO DE DADOS INÚTEIS DO CABEÇALHO

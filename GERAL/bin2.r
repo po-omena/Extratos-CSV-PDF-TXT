@@ -6,7 +6,7 @@
 #CAIXIA
 #date: 04/03/2020
 
-print("Parsing the Data...")
+print("Parsing the Data via Bank 2...")
 tab <- str_split(text, "\n")
 mx <- length(tab)
 setwd(folder_path)

@@ -7,7 +7,7 @@
 #date: 04/03/2020
 
 #                   Inicio do código de processamentod e dados
-print("Parsing the Data...")
+print("Parsing the Data via Bank 3...")
 ano <- readline(prompt=(paste("Entre com o Ano do extrato ", filenamespure[z],":")))
 pdf_file <- filenames[z]
 text <- pdf_text(pdf_file)

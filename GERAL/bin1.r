@@ -6,7 +6,7 @@
 ### SICOOB ANO UNICO
 #date: 04/03/2020
 #                   Inicio do código de processamentod e dados
-print("Parsing the Data...")
+print("Parsing the Data via Bank 1...")
 ano <- readline(prompt=(paste("Entre com o Ano do extrato ", filenamespure[z],":")))
 tab <- str_split(text, "\n")
 text <- pdf_text(pdf_file)

@@ -7,7 +7,7 @@
 #date: 04/03/2020
 
 #Instalar e importar as bibliotecas necessarias
-print("Parsing the Data...")
+print("Parsing the Data via Bank 4...")
 pdf_file <- filenames[z]
 text <- pdf_text(pdf_file)
 tab <- str_split(text, "\n")

@@ -49,44 +49,56 @@ files <- length(filenames)
 						{
 							setwd(origin)
 							source("bin7.r")
+                            num <- 7
 						}
 					else
 						{
 							setwd(origin)
-							source("bin1.R")					
+							source("bin1.R")
+                            num <- 1				
 						}
                 }
             else if(str_detect(teste_text[[1]],"C.AIXA") | str_detect(teste_text[[1]],"AIXA\r\n"))
                     {
                         setwd(origin)
                         source("bin2.R")
+                        num <- 2
                     }
             else if(str_detect(teste_text[[1]], "DEMONSTRATIVO MENSAL - CONTA CORRENTE\r\nDATA"))
                 {
                     setwd(origin)
                     source("bin3.r")
+                    num <- 3
                 }      
            else if(str_detect(teste_text[[1]], "santander"))
                 {
                     setwd(origin)
-                    source("bin7.r")
+                    source("bin6.r")
+                    num <- 6
                 }
-            else if(str_detect(teste_text[[1]],"Agência | Conta"))
+            else if(str_detect(teste_text[[1]],"Agência \\| Conta"))
                 {
                     setwd(origin)
                     source("bin4.r")
+                    num <- 4
                 }
-            else if(str_detect(teste_text[[1]],"Dt. balancete Dt. movimento"))
-					if(str_detect(teste_text[[1]],"85425-5 TOPP INOX"))
-						{
-							setwd(origin)
-							source("bin8.r")
-						}
-					else
-						{
-							setwd(origin)
-							source("bin5.r")					
-						}       
+            else if(str_detect(teste_text[[1]], "Dt balancete Dt. movimento")  |
+                    str_detect(teste_text[[1]], "Dt. balancete Dt. movimento") |
+                    str_detect(teste_text[[1]], "Dt balancete Dt movimento"))
+					    {
+                            if(str_detect(teste_text[[1]],"85425-5 TOPP INOX"))
+					        	{
+					        		setwd(origin)
+					        		source("bin8.r")
+                                    num <- 8
+					        	}
+					        else
+					        	{
+					        		setwd(origin)
+					        		source("bin5.r")
+                                    num <- 5					
+					        	}   
+                        }    
             else
                 {
                     cat("Banco não identificado.\nDigite manualmente o Nº do banco:\n1 - SICOOB\n2 - CAIXA\n3 - BRADESCO")
