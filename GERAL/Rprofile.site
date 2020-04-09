@@ -22,6 +22,7 @@
 #    fortunes::fortune()
 
 .First <- function() {
+	setwd(file.path(Sys.getenv("USERPROFILE"),"Desktop\\Projeto\\Extratos-CSV-PDF-TXT\\GERAL"))
     print("Checking Packages...")
     if(!nzchar(system.file(package = "tidyverse")))
     install.packages("tidyverse")
